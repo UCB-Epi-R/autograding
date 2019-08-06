@@ -1,7 +1,7 @@
 #!/bin/bash
 
-#Rscript install_packages.R;
-#pip3 install -r requirements.txt;
+Rscript install_packages.R;
+pip3 install -r requirements.txt;
 cp $1 hw.R;
 Rscript -e "library(knitr); stitch('hw.R');"
 Rscript grade_asmt.R hw.R;
