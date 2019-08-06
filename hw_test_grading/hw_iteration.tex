@@ -1,0 +1,513 @@
+\documentclass{article}\usepackage[]{graphicx}\usepackage[]{color}
+%% maxwidth is the original width if it is less than linewidth
+%% otherwise use linewidth (to make sure the graphics do not exceed the margin)
+\makeatletter
+\def\maxwidth{ %
+  \ifdim\Gin@nat@width>\linewidth
+    \linewidth
+  \else
+    \Gin@nat@width
+  \fi
+}
+\makeatother
+
+\definecolor{fgcolor}{rgb}{0.345, 0.345, 0.345}
+\newcommand{\hlnum}[1]{\textcolor[rgb]{0.686,0.059,0.569}{#1}}%
+\newcommand{\hlstr}[1]{\textcolor[rgb]{0.192,0.494,0.8}{#1}}%
+\newcommand{\hlcom}[1]{\textcolor[rgb]{0.678,0.584,0.686}{\textit{#1}}}%
+\newcommand{\hlopt}[1]{\textcolor[rgb]{0,0,0}{#1}}%
+\newcommand{\hlstd}[1]{\textcolor[rgb]{0.345,0.345,0.345}{#1}}%
+\newcommand{\hlkwa}[1]{\textcolor[rgb]{0.161,0.373,0.58}{\textbf{#1}}}%
+\newcommand{\hlkwb}[1]{\textcolor[rgb]{0.69,0.353,0.396}{#1}}%
+\newcommand{\hlkwc}[1]{\textcolor[rgb]{0.333,0.667,0.333}{#1}}%
+\newcommand{\hlkwd}[1]{\textcolor[rgb]{0.737,0.353,0.396}{\textbf{#1}}}%
+\let\hlipl\hlkwb
+
+\usepackage{framed}
+\makeatletter
+\newenvironment{kframe}{%
+ \def\at@end@of@kframe{}%
+ \ifinner\ifhmode%
+  \def\at@end@of@kframe{\end{minipage}}%
+  \begin{minipage}{\columnwidth}%
+ \fi\fi%
+ \def\FrameCommand##1{\hskip\@totalleftmargin \hskip-\fboxsep
+ \colorbox{shadecolor}{##1}\hskip-\fboxsep
+     % There is no \\@totalrightmargin, so:
+     \hskip-\linewidth \hskip-\@totalleftmargin \hskip\columnwidth}%
+ \MakeFramed {\advance\hsize-\width
+   \@totalleftmargin\z@ \linewidth\hsize
+   \@setminipage}}%
+ {\par\unskip\endMakeFramed%
+ \at@end@of@kframe}
+\makeatother
+
+\definecolor{shadecolor}{rgb}{.97, .97, .97}
+\definecolor{messagecolor}{rgb}{0, 0, 0}
+\definecolor{warningcolor}{rgb}{1, 0, 1}
+\definecolor{errorcolor}{rgb}{1, 0, 0}
+\newenvironment{knitrout}{}{} % an empty environment to be redefined in TeX
+
+\usepackage{alltt}
+\usepackage[sc]{mathpazo}
+\renewcommand{\sfdefault}{lmss}
+\renewcommand{\ttdefault}{lmtt}
+\usepackage[T1]{fontenc}
+\usepackage{geometry}
+\geometry{verbose,tmargin=2.5cm,bmargin=2.5cm,lmargin=2.5cm,rmargin=2.5cm}
+\setcounter{secnumdepth}{2}
+\setcounter{tocdepth}{2}
+\usepackage[unicode=true,pdfusetitle,
+ bookmarks=true,bookmarksnumbered=true,bookmarksopen=true,bookmarksopenlevel=2,
+ breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=false]
+ {hyperref}
+\hypersetup{
+ pdfstartview={XYZ null null 1}}
+
+\makeatletter
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% User specified LaTeX commands.
+\renewcommand{\textfraction}{0.05}
+\renewcommand{\topfraction}{0.8}
+\renewcommand{\bottomfraction}{0.8}
+\renewcommand{\floatpagefraction}{0.75}
+
+\makeatother
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\begin{document}
+
+
+
+
+
+
+
+
+The results below are generated from an R script.
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlcom{#####################################}
+\hlcom{# Epidemiologic Methods II }
+\hlcom{# PHW250F, PHW250G, PH250B}
+
+\hlcom{# Solutions: Iteration}
+\hlcom{#####################################}
+\hlcom{# Load okR autograder}
+\hlkwd{library}\hlstd{(here)}
+\end{alltt}
+
+
+{\ttfamily\noindent\itshape\color{messagecolor}{\#\# here() starts at /Users/Nolan}}\begin{alltt}
+\hlkwd{source}\hlstd{(}\hlstr{"hw_iteration.ok.R"}\hlstd{)}
+\end{alltt}
+
+
+{\ttfamily\noindent\color{warningcolor}{\#\# Warning: package 'dplyr' was built under R version 3.5.2}}
+
+{\ttfamily\noindent\itshape\color{messagecolor}{\#\# \\\#\# Attaching package: 'dplyr'}}
+
+{\ttfamily\noindent\itshape\color{messagecolor}{\#\# The following objects are masked from 'package:stats':\\\#\# \\\#\#\ \ \ \  filter, lag}}
+
+{\ttfamily\noindent\itshape\color{messagecolor}{\#\# The following objects are masked from 'package:base':\\\#\# \\\#\#\ \ \ \  intersect, setdiff, setequal, union}}
+
+{\ttfamily\noindent\color{warningcolor}{\#\# Warning: package 'reticulate' was built under R version 3.5.2}}\begin{alltt}
+\hlkwd{AutograderInit}\hlstd{()}
+
+\hlcom{# Let's load the dplyr package}
+\hlkwd{library}\hlstd{(dplyr)}
+
+\hlcom{# This assignment uses data from the WASH Benefits}
+\hlcom{# Bangladesh trial. The trial assessed whether }
+\hlcom{# water, sanitation, handwashing, and nutrition }
+\hlcom{# interventions delivered separately or together}
+\hlcom{# could reduce child diarrhea and/or improve child}
+\hlcom{# growth. See Luby et al. 2018 for full details }
+\hlcom{# (doi: http://dx.doi.org/10.1016/)}
+
+\hlcom{# In this problem set we will calculate the incidence }
+\hlcom{# density of diarrhea in different treatment arms after the }
+\hlcom{# interventions were delivered. }
+
+\hlcom{# The data and codebooks are publicly available here: }
+\hlcom{# https://osf.io/pqzj5/}
+
+\hlcom{# Make sure you downloaded the data from }
+\hlcom{# the course site. Save the csv files in the same}
+\hlcom{# location on your computer as the script hw_iteration.R}
+\hlcom{# Then use the following commands to read in the data. }
+
+\hlcom{# Load the diarrhea dataset:}
+\hlstd{d} \hlkwb{=} \hlkwd{read.csv}\hlstd{(}\hlstr{"washb-bangladesh-diar-public.csv"}\hlstd{)}
+
+\hlcom{# Load the dataset with treatment variables: }
+\hlstd{tr} \hlkwb{=} \hlkwd{read.csv}\hlstd{(}\hlstr{"washb-bangladesh-tr-public.csv"}\hlstd{)}
+
+\hlcom{# Next let's merge the two datasets together.}
+\hlcom{# This will allow us to calculate the prevalence}
+\hlcom{# of diarrhea in different treatment arms }
+\hlcom{# (e.g., water, sanitation, handwashing, etc.)}
+
+\hlstd{d_tr} \hlkwb{=} \hlkwd{left_join}\hlstd{(d, tr,} \hlkwc{by}\hlstd{=}\hlkwd{c}\hlstd{(}\hlstr{"block"}\hlstd{,}\hlstr{"clusterid"}\hlstd{))}
+
+\hlcom{# Now let's filter to only keep the rows for diarrhea}
+\hlcom{# measurements after the interventions were delivered. }
+\hlcom{# The svy variable includes values 0, 1, 2. We are going}
+\hlcom{# to drop the 0 values, which indicate the time period}
+\hlcom{# before interventions were delivered. }
+\hlstd{d_tr} \hlkwb{=} \hlstd{d_tr} \hlopt{%>%} \hlkwd{filter}\hlstd{(svy}\hlopt{!=}\hlnum{0}\hlstd{)}
+
+\hlcom{# Now we are going to drop children with missing values }
+\hlcom{# in the diarrhea variable from the dataset. This }
+\hlcom{# assumes that they were missing at random - i.e., }
+\hlcom{# that there are no characteristics associated with whether}
+\hlcom{# a child was missing diarrhea measurement. }
+\hlstd{d_tr} \hlkwb{=} \hlstd{d_tr} \hlopt{%>%} \hlkwd{filter}\hlstd{(}\hlopt{!}\hlkwd{is.na}\hlstd{(diar7d))}
+
+\hlcom{# Take a look at the merged dataset:}
+\hlkwd{head}\hlstd{(d_tr)}
+\end{alltt}
+\begin{verbatim}
+##   dataid childid       tchild clusterid block svy month    sex agedays   ageyrs
+## 1  28001      C1      Sibling       280     1   2    10 female    1537 4.208076
+## 2  28001      T1 Target child       280     1   2    10   male     659 1.804244
+## 3  28001      T1 Target child       280     1   1     9   male     268 0.733744
+## 4  28001      C1      Sibling       280     1   1     9 female    1146 3.137577
+## 5  28002      C1      Sibling       280     1   1     9 female    1525 4.175222
+## 6  28002      C1      Sibling       280     1   2    10 female    1916 5.245722
+##     enrolage newbirth sibnewbirth gt36mos d3plus2d d3plus7d dloose2d dloose7d dblood2d
+## 1  1.9329227        0           0       0        0        0        0        0        0
+## 2 -0.4709103        1           0       0        0        0        0        0        0
+## 3 -0.4709103        1           0       0        0        0        0        0        0
+## 4  1.9329227        0           0       0        0        0        0        0        0
+## 5  2.9705681        0           0       0        0        0        0        0        0
+## 6  2.9705681        0           0       0        0        0        0        0        0
+##   dblood7d diar2d diar7d bruise2d bruise7d tooth2d tooth7d svyweek svyyear         tr
+## 1        0      0      0        0        0       0       0      42    2015 Sanitation
+## 2        0      0      0        0        0       0       0      42    2015 Sanitation
+## 3        0      0      0        0        0       0       0      38    2014 Sanitation
+## 4        0      0      0        0        0       0       0      38    2014 Sanitation
+## 5        0      0      0        0        0       0       0      38    2014 Sanitation
+## 6        0      0      0        0        0       0       0      42    2015 Sanitation
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlcom{# Problem 1: Calculate the diarrhea prevalence in  }
+\hlcom{# each treatment arm. Save the results in an object}
+\hlcom{# called prevalence_tr. It should have 7 rows (one}
+\hlcom{# for each treatment) and two columns. The first }
+\hlcom{# column should be for the treatment name and the}
+\hlcom{# second should be for the prevalence. }
+
+\hlcom{# (Hint: you did this in the homework assignment }
+\hlcom{# called hw_prev, and you can use the same code)}
+\end{alltt}
+\end{kframe}
+\end{knitrout}
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{prevalence_tr} \hlkwb{=} \hlstd{d_tr} \hlopt{%>%}
+  \hlkwd{group_by}\hlstd{(tr)} \hlopt{%>%}
+  \hlkwd{summarise}\hlstd{(}\hlkwc{prevalence}\hlstd{=}\hlkwd{mean}\hlstd{(diar7d))}
+\hlstd{prevalence_tr}
+\end{alltt}
+\begin{verbatim}
+## # A tibble: 7 x 2
+##   tr              prevalence
+##   <fct>                <dbl>
+## 1 Control             0.0597
+## 2 Handwashing         0.0394
+## 3 Nutrition           0.0380
+## 4 Nutrition + WSH     0.0377
+## 5 Sanitation          0.0353
+## 6 Water               0.0531
+## 7 WSH                 0.0423
+\end{verbatim}
+\begin{alltt}
+\hlcom{# Check your answer}
+\hlkwd{CheckProblem1}\hlstd{()}
+\end{alltt}
+\begin{verbatim}
+## [1] "Correct!!"
+## Problem 1: 1/1
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlcom{# Problem 2: Write a function that converts}
+\hlcom{# prevalence to incidence density. Assume }
+\hlcom{# that the disease is rare. The function should}
+\hlcom{# be called calculate_inc_rare. It should take}
+\hlcom{# two arguments for prevalence (prev) and duration (d)}
+\hlcom{# of disease. It should return the estimated}
+\hlcom{# incidence density in person-days. }
+\end{alltt}
+\end{kframe}
+\end{knitrout}
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{calculate_inc_rare}\hlkwb{=}\hlkwa{function}\hlstd{(}\hlkwc{prev}\hlstd{,}\hlkwc{d}\hlstd{)\{}
+  \hlstd{id} \hlkwb{=} \hlstd{prev} \hlopt{/} \hlstd{d}
+  \hlkwd{return}\hlstd{(id)}
+\hlstd{\}}
+
+\hlcom{# Check your answer}
+\hlcom{# Note: the autograder will only check that}
+\hlcom{# you defined a function with the correct name}
+\hlcom{# and that the arguments are named correctly. }
+\hlkwd{CheckProblem2}\hlstd{()}
+\end{alltt}
+\begin{verbatim}
+## [1] "Correct!"
+## Problem 2: 1/1
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlcom{# Problem 3: Using dplyr (and not a foor loop), }
+\hlcom{# add a column to the data frame}
+\hlcom{# prevalence_tr that has the incidence density}
+\hlcom{# in each arm assuming that the duration is 5 days.}
+\hlcom{# Use the function calculate_inc_rare to }
+\hlcom{# estimate the incidence density and name the column }
+\hlcom{# incidence.}
+\end{alltt}
+\end{kframe}
+\end{knitrout}
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{prevalence_tr} \hlkwb{=} \hlstd{prevalence_tr} \hlopt{%>%}
+  \hlkwd{mutate}\hlstd{(}\hlkwc{incidence} \hlstd{=} \hlkwd{calculate_inc_rare}\hlstd{(}\hlkwc{prev} \hlstd{= prevalence,} \hlkwc{d} \hlstd{=} \hlnum{5}\hlstd{))}
+
+\hlcom{# Check your answer}
+\hlkwd{CheckProblem3}\hlstd{()}
+\end{alltt}
+\begin{verbatim}
+## [1] "Correct!"
+## Problem 3: 1/1
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlcom{# Problem 4: Using dplyr (and not a for loop), }
+\hlcom{# calculate the incidence density difference}
+\hlcom{# (incidence density in each intervention arm minus }
+\hlcom{# the incidence density in the control arm). }
+\hlcom{# Save results in a column called inc_diff }
+\hlcom{# in the data frame prevalence_tr. }
+\end{alltt}
+\end{kframe}
+\end{knitrout}
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlcom{# To get you started, here is code to save}
+\hlcom{# the incidence density in the control arm as }
+\hlcom{# a scalar. You can subtract this scalar from the}
+\hlcom{# incidence density in each treatment arm. }
+\hlstd{control_inc} \hlkwb{=} \hlstd{prevalence_tr} \hlopt{%>%}
+  \hlkwd{filter}\hlstd{(tr}\hlopt{==}\hlstr{"Control"}\hlstd{)} \hlopt{%>%}
+  \hlkwd{select}\hlstd{(incidence)}
+\hlstd{control_inc} \hlkwb{=} \hlkwd{as.vector}\hlstd{(control_inc}\hlopt{$}\hlstd{incidence)}
+
+\hlcom{# calculate the incidence difference in each arm }
+\hlstd{prevalence_tr} \hlkwb{=} \hlstd{prevalence_tr} \hlopt{%>%}
+  \hlkwd{mutate}\hlstd{(}\hlkwc{inc_diff} \hlstd{= incidence} \hlopt{-} \hlstd{control_inc)}
+
+\hlcom{# Check your answer}
+\hlkwd{CheckProblem4}\hlstd{()}
+\end{alltt}
+\begin{verbatim}
+## [1] "Correct!"
+## Problem 4: 1/1
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlcom{# Problem 5: Using a for loop (and not dplyr), }
+\hlcom{# calculate the incidence density difference}
+\hlcom{# (incidence density in each intervention arm minus }
+\hlcom{# the incidence density in the control arm). }
+\hlcom{# Save results in a vector called inc_diff_loop.}
+\hlcom{# Hint: the length of the vector should be 6.}
+\hlcom{# Do not include the control arm in the vector.}
+
+\hlcom{# The purpose of this problem is to show you }
+\hlcom{# that there is more than one way to do the same}
+\hlcom{# thing in R. This is an example of a situation}
+\hlcom{# in which most R users would probably prefer to }
+\hlcom{# use dplyr, but for your learning purposes, it is}
+\hlcom{# helpful to practice using a loop to see the pros}
+\hlcom{# and cons of each approach. }
+\end{alltt}
+\end{kframe}
+\end{knitrout}
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{inc_diff_loop} \hlkwb{=} \hlkwd{vector}\hlstd{(}\hlkwc{length}\hlstd{=}\hlnum{6}\hlstd{)}
+\hlkwa{for}\hlstd{(i} \hlkwa{in} \hlnum{1}\hlopt{:}\hlkwd{length}\hlstd{(inc_diff_loop))\{}
+  \hlstd{inc_diff_loop[i]} \hlkwb{=} \hlstd{prevalence_tr}\hlopt{$}\hlstd{incidence[i}\hlopt{+}\hlnum{1}\hlstd{]} \hlopt{-} \hlstd{control_inc}
+\hlstd{\}}
+
+\hlstd{inc_diff_loop}
+\end{alltt}
+\begin{verbatim}
+## [1] -0.004058814 -0.004332022 -0.004390663 -0.004874400 -0.001318247 -0.003467338
+\end{verbatim}
+\begin{alltt}
+\hlcom{# Check your answer}
+\hlkwd{CheckProblem5}\hlstd{()}
+\end{alltt}
+\begin{verbatim}
+## [1] "Correct!"
+## Problem 5: 1/1
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlcom{# Problem 6: Optional challenge question!}
+
+\hlcom{# In the data frame d_tr, columns d3plus2d through tooth7d }
+\hlcom{# contain indicators for whether each child}
+\hlcom{# experienced those symptoms in the past 7 days}
+\hlcom{# or the past 2 days. }
+
+\hlcom{# Write a for loop to take the mean of each of those }
+\hlcom{# columns, and save the results in a vector called}
+\hlcom{# symptoms. When taking the mean, you will need to }
+\hlcom{# use the option na.rm=TRUE in order to ignore}
+\hlcom{# missing values when calculating the mean.}
+
+\hlcom{# There is more than one way to approach this problem. }
+\end{alltt}
+\end{kframe}
+\end{knitrout}
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{symptoms_df} \hlkwb{=} \hlstd{d_tr} \hlopt{%>%}
+  \hlkwd{select}\hlstd{(d3plus2d}\hlopt{:}\hlstd{tooth7d)}
+
+\hlstd{symptoms} \hlkwb{=} \hlkwd{vector}\hlstd{(}\hlkwc{length} \hlstd{=} \hlkwd{ncol}\hlstd{(symptoms_df))}
+\hlkwa{for}\hlstd{(i} \hlkwa{in} \hlnum{1}\hlopt{:}\hlkwd{length}\hlstd{(symptoms))\{}
+  \hlstd{symptoms[i]} \hlkwb{=} \hlkwd{mean}\hlstd{(symptoms_df[,i],} \hlkwc{na.rm}\hlstd{=}\hlnum{TRUE}\hlstd{)}
+\hlstd{\}}
+
+\hlcom{# Check your answer}
+\hlkwd{CheckProblem6}\hlstd{()}
+\end{alltt}
+\begin{verbatim}
+## [1] "Correct!"
+## Problem 6: 1/1
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlcom{# Problem 7: Which symptoms were the most common?}
+\hlcom{# Enter your answer as a string scalar named p7}
+\hlcom{# including the column name in the quotes.}
+\hlcom{# (e.g., p7 = "dloose2d")}
+\end{alltt}
+\end{kframe}
+\end{knitrout}
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{p7} \hlkwb{=} \hlstr{"d3plus7d"}
+
+\hlcom{# Check your answer}
+\hlkwd{CheckProblem7}\hlstd{()}
+\end{alltt}
+\begin{verbatim}
+## [1] "Correct!"
+## Problem 7: 1/1
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlcom{# Check your total score}
+\hlkwd{MyTotalScore}\hlstd{()}
+\end{alltt}
+\begin{verbatim}
+##                 
+## Problem 1:   1/1
+## Problem 2:   1/1
+## Problem 3:   1/1
+## Problem 4:   1/1
+## Problem 5:   1/1
+## Problem 6:   1/1
+## Problem 7:   1/1
+## Total Score: 7/7
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+
+The R session information (including the OS info, R version and all
+packages used):
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlkwd{sessionInfo}\hlstd{()}
+\end{alltt}
+\begin{verbatim}
+## R version 3.5.0 (2018-04-23)
+## Platform: x86_64-apple-darwin15.6.0 (64-bit)
+## Running under: macOS Sierra 10.12.6
+## 
+## Matrix products: default
+## BLAS: /Library/Frameworks/R.framework/Versions/3.5/Resources/lib/libRblas.0.dylib
+## LAPACK: /Library/Frameworks/R.framework/Versions/3.5/Resources/lib/libRlapack.dylib
+## 
+## locale:
+## [1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
+## 
+## attached base packages:
+## [1] stats     graphics  grDevices utils     datasets  methods   base     
+## 
+## other attached packages:
+## [1] reticulate_1.12  dplyr_0.8.0.1    assertthat_0.2.0 checkr_0.3.0     rlist_0.4.6.1   
+## [6] jsonlite_1.6     here_0.1         knitr_1.22      
+## 
+## loaded via a namespace (and not attached):
+##  [1] Rcpp_1.0.0        magrittr_1.5      tidyselect_0.2.5  lattice_0.20-35  
+##  [5] R6_2.4.0          rlang_0.3.1.9000  fansi_0.4.0       stringr_1.4.0    
+##  [9] highr_0.7         tools_3.5.0       grid_3.5.0        data.table_1.11.4
+## [13] xfun_0.5          utf8_1.1.4        cli_1.0.1         rprojroot_1.3-2  
+## [17] tibble_2.0.1      crayon_1.3.4      Matrix_1.2-17     purrr_0.3.1      
+## [21] glue_1.3.0        evaluate_0.13     stringi_1.3.1     compiler_3.5.0   
+## [25] pillar_1.3.1      backports_1.1.2   pkgconfig_2.0.2
+\end{verbatim}
+\begin{alltt}
+\hlkwd{Sys.time}\hlstd{()}
+\end{alltt}
+\begin{verbatim}
+## [1] "2019-07-30 00:29:26 PDT"
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+
+\end{document}
